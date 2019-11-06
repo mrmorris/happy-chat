@@ -1,7 +1,8 @@
 'use strict';
 
 const express = require('express');
-const SocketServer = require('ws').Server;
+const WebSocket = require('ws');
+const SocketServer = WebSocket.Server;
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
@@ -16,10 +17,20 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
-});
 
-setInterval(() => {
-  wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
+	ws.on("message", message => {
+    ws.send(message);
+    wss.clients.forEach(client => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
   });
-}, 1000);
+
+  ws.send(
+    JSON.stringify({
+      user: "Happy Server",
+      message: "Welcome!"
+    })
+  );
+});
