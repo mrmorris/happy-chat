@@ -1,0 +1,16 @@
+{
+  "name": "happy-chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mrmorris/happy-chat",
+  "author": "Ryan Morris <mr.morris@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+  	"node": "10.x"
+  },
+  "scripts": {
+  	"build": "npm install",
+  	"start": "node index.js"
+  }
+}
