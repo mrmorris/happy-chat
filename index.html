@@ -19,5 +19,29 @@
   </head>
   <body>
     <h1>Happy Times</h1>
+    
+    <p>You can connect to me if you have the right token.</p>
+    
+    <h2>Messages incoming!</h2>
+    <div id="messages">
+      
+    </div>
+    
+    <script type="text/javascript">
+      const messagesElement = document.getElementById('messages');
+      
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      
+      if (messagesElement && token) {
+        const connection = new WebSocket('wss://' + window.location.hostname + '/?token=' + token);
+        connection.addEventListener('message', function(e) {
+          const message = JSON.parse(e.data);
+          const messageDiv = document.createElement('div');
+          messageDiv.innerHTML = '<p>' + message + '</p>';
+          messagesElement.appendChild(messageDiv);
+        });
+      }
+    </script>
   </body>
 </html>
