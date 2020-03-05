@@ -22,6 +22,15 @@
     
     <p>You can connect to me if you have the right token.</p>
     
+    <p>Send me messages as strings or in a JSON format like so:</p>
+    
+    <code>
+      {
+        user: 'Ryan',
+        message: 'Hi!'
+      }
+    </code>
+    
     <h2>Messages incoming!</h2>
     <div id="messages">
       
@@ -36,7 +45,14 @@
       if (messagesElement && token) {
         const connection = new WebSocket('wss://' + window.location.hostname + '/?token=' + token);
         connection.addEventListener('message', function(e) {
-          const message = JSON.parse(e.data);
+          let message;
+          
+          try {
+            message = JSON.parse(e.data).message;
+          } catch(e) {
+            message = e.data;
+          }
+          
           const messageDiv = document.createElement('div');
           messageDiv.innerHTML = '<p>' + message + '</p>';
           messagesElement.appendChild(messageDiv);
