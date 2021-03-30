@@ -38,6 +38,10 @@ wss.on('connection', (ws, req) => {
     });
   });
 
+  setInterval(() => {
+    ws.send("");
+  }, 30 * 1000);
+
   ws.send(
     JSON.stringify({
       user: "Happy Server",
