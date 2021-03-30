@@ -38,6 +38,9 @@ wss.on('connection', (ws, req) => {
     });
   });
 
+  // setting up a manual "ping" message to keep the connection alive
+  // apparently in Heroku, the connection will timeout in 60s without this...
+  // a client could also be the one pinging the server
   setInterval(() => {
     ws.send("");
   }, 30 * 1000);
