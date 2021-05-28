@@ -10,6 +10,7 @@
     "node": "10.x"
   },
   "scripts": {
+    "build": "npm install",
     "start": "node server.js"
   },
   "dependencies": {
